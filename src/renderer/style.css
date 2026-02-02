@@ -1,0 +1,9 @@
+#task-input{
+    display: flex;
+    flex-direction: column;
+}
+
+body{
+    background-color: rgb(198, 239, 225);
+}
+
