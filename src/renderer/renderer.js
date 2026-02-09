@@ -1,15 +1,10 @@
-const fs = require('fs')
-const path = require('path')
-
-const dbPath = path.join(__dirname, 'database.txt')
-
 const taskNameInput = document.getElementById("taskName")
 const taskTextInput = document.getElementById("taskText")
 const addTaskButton = document.getElementById("addTaskButton")
 
 const taskList = document.getElementById("taskList")
 
-addTaskButton.addEventListener('click', ()=> {
+addTaskButton.addEventListener('click', async ()=> {
         const taskName = taskNameInput.value
         const taskText = taskTextInput.value
 
@@ -17,8 +12,8 @@ addTaskButton.addEventListener('click', ()=> {
             alert("Заполните оба поля")
         }
         else{
-            const dataToSave = `${taskName} | ${taskText}\n`
-            fs.appendFileSync(dbPath, dataToSave)
+            
+            const result = await window.electronAPI.saveTask(taskName, taskText)
 
             const item = document.createElement('li')
             item.textContent = `${taskName}: ${taskText}`
@@ -30,17 +25,16 @@ addTaskButton.addEventListener('click', ()=> {
     }
 )
 
-function loadTasks() {
-    if (fs.existsSync(dbPath)){
-        const fileContent = fs.readFileSync(dbPath, 'utf-8')
-        const rows = fileContent.split('\n')
-        rows.forEach(row => {
-            if(row.trim() === '') return
-            const item = document.createElement('li')
-            item.textContent = row.replace(' | ', ': ')
-            taskList.appendChild(item)
-        })
-    }
+async function loadTasks() {
+    const rows = await window.electronAPI.loadTasks()
+
+    rows.forEach(row => {
+        if(row.trim() === '') return
+        const item = document.createElement('li')
+        item.textContent = row.replace(' | ', ': ')
+        taskList.appendChild(item)
+    })
+
 }
 
 loadTasks()
