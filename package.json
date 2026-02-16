@@ -5,13 +5,44 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
   },
+
+  "build": {
+    "appId": "com.webinar.taskmanager",
+    "productName": "Task Manager",
+    "directories": {
+      "output": "dist"
+    },
+
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+
+    "win": {
+
+    },
+
+    "mac":{
+
+    },
+
+    "linux":{
+
+    }
+  },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^39.2.7"
+    "electron": "^39.2.7",
+    "electron-builder": "^26.7.0"
   }
 }

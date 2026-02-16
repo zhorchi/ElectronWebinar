@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.executeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('electronAPI', {
     saveTask: (taskName, taskText) => {
         return ipcRenderer.invoke('save-task', taskName, taskText)
     },
